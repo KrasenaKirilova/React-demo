@@ -1,12 +1,25 @@
-import { moviesData } from "../../data/moviesdata";
-import { Movie } from "../movie/Movie";
+import { useState } from "react";
+import { moviesData } from "../../data/MoviesData";
+import { Movie as MovieInterface } from "../../interfaces/Movie";
+import { Movie as MovieItem } from "../movie/Movie";
 
-export const Movies = () => {
+export function Movies() {
+
+    const [data, setData] = useState(Array<MovieInterface>);
+    const [isLoading, setIsLoading] = useState(true);
+
+    setTimeout(() => {
+        setData(moviesData);
+        setIsLoading(false);
+    }, 5000)
+
+
     return (
         <div>
 
             <div>Movies Component / Parent</div>
-            {moviesData.map(x => <Movie movie={x} key={x.id} />)}
+            {isLoading && <p>Loading...</p>}
+            {!isLoading && data.map(x => <MovieItem movie={x} key={x.id} />)}
 
         </div >
     );
